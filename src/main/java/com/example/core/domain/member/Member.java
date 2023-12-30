@@ -1,6 +1,7 @@
 package com.example.core.domain.member;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +21,9 @@ public class Member {
     private Long id;
 
     private String name;
+
+    @Builder
+    public Member(String name) {
+        this.name = name;
+    }
 }
