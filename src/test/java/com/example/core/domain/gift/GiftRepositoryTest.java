@@ -45,4 +45,22 @@ class GiftRepositoryTest {
         assertThat(result.getId()).isEqualTo(1L);
     }
 
+    @Test
+    void 요청시간_비교() {
+        // given
+        Gift giftBefore = Gift.builder()
+                .userId(1L)
+                .build();
+        Gift giftAfter = Gift.builder()
+                .userId(2L)
+                .build();
+
+        // when
+        Gift beforeResult = giftRepository.save(giftBefore);
+        Gift afterResult = giftRepository.save(giftAfter);
+
+        // then
+        assertThat(beforeResult.getCreatedDate()).isBefore(afterResult.getCreatedDate());
+    }
+
 }
