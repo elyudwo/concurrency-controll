@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @EnableJpaAuditing
 @DataJpaTest
 class GiftRepositoryTest {
@@ -18,11 +20,29 @@ class GiftRepositoryTest {
 
     @Test
     void BaseTimeEntity_테스트() {
+        // given
         Gift gift = giftRepository.save(Gift.builder()
                 .userId(1L)
                 .build());
 
-        Assertions.assertThat(gift.getCreatedDate()).isBefore(LocalDateTime.now());
+        // when
+        LocalDateTime applyTime = gift.getCreatedDate();
+
+        // then
+        assertThat(applyTime).isBefore(LocalDateTime.now());
+    }
+
+    @Test
+    void 선물_요청_등록() {
+        // given
+        Gift gift = Gift.builder()
+                .userId(1L)
+                .build();
+        // when
+        Gift result = giftRepository.save(gift);
+
+        // then
+        assertThat(result.getId()).isEqualTo(1L);
     }
 
 }
