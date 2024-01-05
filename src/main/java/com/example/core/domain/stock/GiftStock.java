@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,6 +16,9 @@ public class GiftStock {
     @Column(name = "gift_id")
     @GeneratedValue
     private Long id;
+
+    @Version
+    private Integer version;
 
     private String giftName;
     private Long stock;

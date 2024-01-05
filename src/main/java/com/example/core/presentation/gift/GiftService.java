@@ -5,6 +5,7 @@ import com.example.core.domain.gift.GiftRepository;
 import com.example.core.domain.stock.GiftStock;
 import com.example.core.domain.stock.GiftStockRepository;
 import com.example.core.dto.request.gift.GiftRequestDto;
+import com.example.core.util.Retry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,6 @@ public class GiftService {
 
     private final GiftRepository giftRepository;
     private final GiftStockRepository giftStockRepository;
-    int count = 0;
 
     public Long requestGift(GiftRequestDto giftRequest) {
         Gift gift = giftRepository.save(giftRequest.toGift());
@@ -24,13 +24,12 @@ public class GiftService {
     }
 
     @Transactional
-    public GiftStock callRegister() {
+    public void callRegister() {
         GiftStock giftStock = giftStockRepository.findByGiftName("StarBucks");
         minusStock(giftStock);
         giftRepository.save(Gift.builder()
                 .giftName("StarBucks")
                 .build());
-        return giftStock;
     }
 
     private void minusStock(GiftStock giftStock) {

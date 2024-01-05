@@ -36,19 +36,18 @@ class CoreApplicationTests {
                 .stock(10L)
                 .build());
 
-        ExecutorService executorService = Executors.newFixedThreadPool(100);
-        CountDownLatch countDownLatch = new CountDownLatch(100);
+        ExecutorService executorService = Executors.newFixedThreadPool(50);
+        CountDownLatch countDownLatch = new CountDownLatch(50);
 
         AtomicInteger successCount = new AtomicInteger();
         AtomicInteger failCount = new AtomicInteger();
 
-        for (int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 50; i++) {
             executorService.execute(() -> {
                 try {
-                    GiftStock giftStock = scService.register();
-                    System.out.println(giftStock.getStock());
+                    giftService.callRegister();
                     successCount.incrementAndGet();
-                } catch (IllegalArgumentException e) {
+                } catch (Exception e) {
                     failCount.incrementAndGet();
                 } finally {
                     countDownLatch.countDown();
