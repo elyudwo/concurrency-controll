@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
@@ -18,13 +15,17 @@ public class Gift extends BaseTimeEntity {
 
     @Id
     @Column(name = "gift_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long userId;
 
+    @Column(name = "gift_name")
+    private String giftName;
+
     @Builder
-    public Gift(Long userId) {
+    public Gift(Long userId, String giftName) {
         this.userId = userId;
+        this.giftName = giftName;
     }
 }
